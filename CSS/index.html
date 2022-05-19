@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link rel="stylesheet" href="index.css" />
+    <style>
+      * {
+        font-size: 30px;
+      }
+
+      div {
+        border: 5px solid black;
+      }
+
+      body div {
+        color: aquamarine;
+      }
+      body > div {
+        color: darksalmon;
+      }
+
+      #my-box {
+        width: 500px;
+        height: 500px;
+      }
+      .box {
+        background-color: aquamarine;
+        width: 100px;
+        height: 100px;
+      }
+      #my-box:hover {
+        background-color: dodgerblue !important;
+      }
+
+      #my-box::before {
+        content: 'BEFORE';
+      }
+
+      [id='my-box'] {
+        font-size: 50px;
+      }
+
+      div.box[id='my-box'] {
+        border: 20px red solid;
+      }
+
+      th,
+      td {
+        border: 2px solid blue;
+      }
+      .btn {
+        display: inline-block;
+        appearance: auto;
+        writing-mode: horizontal-tb !important;
+        text-rendering: auto;
+        color: rgb(0, 0, 0);
+        letter-spacing: normal;
+        word-spacing: normal;
+        line-height: normal;
+        text-transform: none;
+        text-indent: 0px;
+        text-shadow: none;
+        display: inline-block;
+        text-align: center;
+        align-items: flex-start;
+        cursor: default;
+        box-sizing: border-box;
+        background-color: rgb(239, 239, 239);
+
+        margin: 0em;
+        padding: 1px 6px;
+        border-width: 2px;
+        border-style: outset;
+        border-color: buttonborder;
+        border-image: initial;
+      }
+    </style>
+    <title>CSS</title>
+  </head>
+  <body>
+    <div
+      id="my-box"
+      class="box"
+      style="background-color: blue"
+    >
+      BOX
+      <div>innerBOX</div>
+    </div>
+    <div>outerBOX2</div>
+    <span>SPAN</span>
+    <span>SPAN</span>
+    <span>SPAN</span>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>AGE</th>
+      </tr>
+      <tr>
+        <td>Patrick</td>
+        <td>18</td>
+      </tr>
+      <tr>
+        <td>Sam</td>
+        <td>18</td>
+      </tr>
+    </table>
+    <button tpye="button">
+      <span>Icon</span>BUtton
+    </button>
+    <span class="btn">Button</span>
+
+    <input type="submit" value="Input Button" />
+  </body>
+</html>
