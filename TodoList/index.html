@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .todolist {
+        width: 500px;
+        height: 600px;
+        padding: 20px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+          0 1px 2px rgba(0, 0, 0, 0.24);
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .todolist__header-title {
+        padding: 5px;
+        text-align: center;
+        font-size: 30px;
+        text-transform: uppercase;
+      }
+      .todolist__add-todo {
+        display: flex;
+      }
+      .add-todo__input {
+        flex-grow: 1;
+        padding: 5px;
+        border: 1px solid orange;
+        margin-right: 5px;
+      }
+      .add-todo__btn {
+        width: 28px;
+        height: 28px;
+        background-color: cornflowerblue;
+        outline: none;
+        border: none;
+        color: white;
+      }
+      .todolist__content-item {
+        height: 50px;
+        display: flex;
+        background-color: aqua;
+        border-top: 1px solid cornflowerblue;
+        align-items: center;
+        padding: 5px;
+      }
+      .content-item__title {
+        flex-grow: 1;
+      }
+      .todolist__content {
+        margin-top: 5px;
+        height: 490px;
+        overflow: auto;
+      }
+      .todolist__content-item:last-child {
+        border-bottom: 1px solid cornflowerblue;
+      }
+      .content-item__actions {
+        width: 60px;
+      }
+      .content-item__title {
+        width: 80%;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <section class="todolist">
+      <header class="todolist__header">
+        <h1 class="todolist__header-title">
+          TodoList
+        </h1>
+        <div class="todolist__add-todo">
+          <input
+            class="add-todo__input"
+            placeholder="what are you going to do?"
+          /><button class="add-todo__btn">
+            +
+          </button>
+        </div>
+      </header>
+      <ul class="todolist__content"></ul>
+    </section>
+
+    <script>
+      // elements
+      const todolistContent =
+        document.querySelector(
+          '.todolist__content'
+        );
+      const addtodoInput = document.querySelector(
+        '.add-todo__input'
+      );
+      const addtodoBtn = document.querySelector(
+        '.add-todo__btn'
+      );
+
+      // setEvent
+      function addAddTodoEvent() {
+        addtodoInput.addEventListener(
+          'keypress',
+          (e) => {
+            console.log(e.target.value);
+          }
+        );
+
+        addtodoBtn.addEventListener(
+          'click',
+          () => {
+            fetch(
+              'https://jsonplaceholder.typicode.com/todos',
+              {
+                method: 'POST',
+                body: JSON.stringify({
+                  userId: 1,
+                  title: addtodoInput.value,
+                  completed: false,
+                }),
+                headers: {
+                  'Content-type':
+                    'application/json; charset=UTF-8',
+                },
+              }
+            )
+              .then((response) => response.json())
+              .then((newTodo) => {
+                todos = [...todos, newTodo];
+                renderTodoList(todos);
+              });
+          }
+        );
+      }
+
+      // data
+      let todos = [];
+
+      // Init
+      addAddTodoEvent();
+      fetch(
+        'https://jsonplaceholder.typicode.com/todos'
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((todosArray) => {
+          todos = todosArray;
+          renderTodoList(todos);
+        });
+
+      function renderTodoList(todos) {
+        console.log(todos);
+        const todolistTmp =
+          generateTodoListTmp(todos);
+
+        render(todolistTmp, todolistContent);
+      }
+
+      // tempaltes
+      function generateTodoListTmp(todos) {
+        let res = todos
+          .map((todo) => {
+            return generateTodoTmp(todo);
+          })
+          .join('');
+        return res;
+      }
+
+      function generateTodoTmp(todo) {
+        return `<li class="todolist__content-item">
+          <span class="content-item__title">
+            ${todo.title}
+          </span>
+          <div class="content-item__actions">
+            <button>Edit</button>
+            <button>X</button>
+          </div>
+        </li>`;
+      }
+
+      // render
+      function render(template, element) {
+        element.innerHTML = template;
+      }
+    </script>
+  </body>
+</html>
