@@ -147,11 +147,47 @@
           }
         );
       }
-
+      function addTodoActionEvent() {
+        todolistContent.addEventListener(
+          'click',
+          (e) => {
+            console.log(
+              'click',
+              e.target.className,
+              parseTodoIdFromBtn(e.target)
+            );
+            if (
+              e.target.className === 'btn-remove'
+            ) {
+              const currentId =
+                parseTodoIdFromBtn(e.target);
+              console.log(typeof currentId);
+              fetch(
+                `https://jsonplaceholder.typicode.com/todos/${currentId}`,
+                {
+                  method: 'DELETE',
+                }
+              )
+                .then((res) => {
+                  return res.json();
+                })
+                .then((data) => {
+                  console.log(data);
+                  todos = todos.filter(
+                    (todo) =>
+                      todo.id !== currentId
+                  );
+                  renderTodoList(todos);
+                });
+            }
+          }
+        );
+      }
       // data
       let todos = [];
 
       // Init
+      addTodoActionEvent();
       addAddTodoEvent();
       fetch(
         'https://jsonplaceholder.typicode.com/todos'
@@ -184,14 +220,18 @@
 
       function generateTodoTmp(todo) {
         return `<li class="todolist__content-item">
-          <span class="content-item__title">
-            ${todo.title}
-          </span>
-          <div class="content-item__actions">
-            <button>Edit</button>
-            <button>X</button>
-          </div>
-        </li>`;
+                <span class="content-item__title">
+                  ${todo.title}
+                </span>
+                <div class="content-item__actions">
+                  <button>Edit</button>
+                  <button class="btn-remove" id="todo-${todo.id}">X</button>
+                </div>
+              </li>`;
+      }
+      // helper
+      function parseTodoIdFromBtn(btnElement) {
+        return +btnElement.id.substring(5);
       }
 
       // render
