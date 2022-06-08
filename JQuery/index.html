@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+    <title>JQuery</title>
+  </head>
+  <body>
+    <button class="continue">Button 1</button>
+    <button class="continue">Button 2</button>
+
+    <span id="banner-message"
+      >banner-message</span
+    >
+    <div id="button-container">
+      <button>Show</button>
+    </div>
+
+    <script>
+      class PQuery {
+        constructor(selector) {
+          // target the element
+          if (
+            (selector === window) |
+            (selector === document)
+          ) {
+            this.elements = [selector];
+          } else {
+            this.elements =
+              document.querySelectorAll(selector);
+          }
+        }
+        html(innerhtml) {
+          console.log('html is working');
+          // change the innerHTML for the target element
+          this.elements.forEach((item) => {
+            item.innerHTML = innerhtml;
+          });
+          return this;
+        }
+        hide() {
+          this.elements.forEach((item) => {
+            item.preDispaly = item.style.display;
+            item.style.display = 'none';
+          });
+          return this;
+        }
+        on(eventType, callback) {
+          this.elements.forEach((item) => {
+            item.addEventListener(
+              eventType,
+              callback
+            );
+          });
+          return this;
+        }
+        show() {
+          this.elements.forEach((item) => {
+            item.style.display = item.preDispaly;
+          });
+          return this;
+        }
+      }
+
+      const $$ = function (selector) {
+        console.log('$$ is a function');
+        return new PQuery(selector);
+      };
+
+      $$('button.continue').html(
+        '<h1>Next Step...</h1>'
+      );
+
+      var hiddenBox = $$('#banner-message');
+      hiddenBox.hide();
+      $$('#button-container button').on(
+        'click',
+        function (event) {
+          alert('Click');
+          hiddenBox.show();
+        }
+      );
+
+      const a = $$('button.continue')
+        .html('change1')
+        .on('click', () => {
+          console.log('Chaining');
+        });
+      const b = $$('#banner-message');
+      console.log('A', a);
+      //   console.log(a.html === b.html);
+
+      //   console.log(
+      //     (() => {
+      //       console.log('hello');
+      //     }) ===
+      //       (() => {
+      //         console.log('hello');
+      //       })
+      //   );
+
+      //   const arr1 = [1, 2, 3];
+      //   const arr2 = [2, 4, 5];
+      //   console.log(arr1 === arr2);
+      //   console.log(arr1.forEach === arr2.forEach);
+    </script>
+  </body>
+</html>
