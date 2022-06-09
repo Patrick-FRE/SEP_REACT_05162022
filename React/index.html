@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>React</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@17/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    ></script>
+  </head>
+  <body>
+    <div id="hello-example"></div>
+    <script>
+      console.log('hello');
+      const ReactElement = React.createElement(
+        'section',
+        {
+          className: 'app',
+        },
+        /*#__PURE__*/ React.createElement(
+          'header',
+          {
+            className: 'app__header',
+          },
+          'ItemList'
+        ),
+        /*#__PURE__*/ React.createElement(
+          'ul',
+          {
+            id: 'items',
+          },
+          /*#__PURE__*/ React.createElement(
+            'li',
+            {
+              onClick: () => {
+                alert('apple');
+              },
+            },
+            ' Apple'
+          ),
+          /*#__PURE__*/ React.createElement(
+            'li',
+            null,
+            ' Banana'
+          )
+        )
+      );
+
+      const render = (
+        reactElement,
+        domElement
+      ) => {
+        let curDom;
+        if (typeof reactElement === 'string') {
+          curDom =
+            document.createTextNode(reactElement);
+        } else {
+          const type = reactElement.type;
+          const props = reactElement.props;
+          curDom = document.createElement(type);
+          Object.entries(props).forEach(
+            ([key, value]) => {
+              if (key === 'children') {
+                if (Array.isArray(value)) {
+                  console.log(value);
+                  value.forEach((rElement) => {
+                    render(rElement, curDom);
+                  });
+                } else {
+                  render(value, curDom);
+                }
+              } else if (key.startsWith('on')) {
+                curDom.addEventListener(
+                  getEventActionFromProps(key),
+                  value
+                );
+              } else {
+                curDom[key] = value;
+              }
+            }
+          );
+        }
+
+        domElement.appendChild(curDom);
+      };
+
+      const MyReactDOM = {
+        render: render,
+      };
+
+      MyReactDOM.render(
+        ReactElement,
+        document.getElementById('hello-example')
+      );
+
+      //utils
+
+      function getEventActionFromProps(propsKey) {
+        return propsKey.slice(2).toLowerCase();
+      }
+    </script>
+  </body>
+</html>

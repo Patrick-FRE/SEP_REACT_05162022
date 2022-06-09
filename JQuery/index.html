@@ -51,7 +51,7 @@
           return this;
         }
         hide() {
-          this.elements.forEach((item) => {
+          this.elements.map((item) => {
             item.preDispaly = item.style.display;
             item.style.display = 'none';
           });
