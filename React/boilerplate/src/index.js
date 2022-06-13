@@ -1,3 +1,5 @@
+import React from 'react';
+import ReactDOM from 'react-dom'
 import Button from './components/Button/Button'
 class HelloMessage extends React.Component {
     render() {
@@ -11,6 +13,6 @@ class HelloMessage extends React.Component {
 }
 
 ReactDOM.render(
-    <HelloMessage name="Taylor" />,
-    document.getElementById('hello-example')
+    <HelloMessage name="Sam" />,
+    document.getElementById('root')
 );
