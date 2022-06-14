@@ -10,6 +10,10 @@ const reactE = <section>
   <button>+</button><button>-</button>
 </section>;
 
+const Button = (props) => {
+  <button>{props.children}</button>
+}
+
 class Counter extends React.Component {
   // constructor(props) {
   //   super(props)
@@ -34,7 +38,7 @@ class Counter extends React.Component {
     console.log("STATE", this.state)
     return <section>
       <header>{this.state.title}:{this.state.counter}</header>
-      <button>+</button><button>-</button>
+      <Button>+</Button><Button>-</Button>
     </section>;
   }
   componentDidMount() {
