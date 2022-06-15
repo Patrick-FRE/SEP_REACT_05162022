@@ -1,9 +1,29 @@
-import React from 'react';
-import MyReact from './MyReact'
+class MyReact {
+    constructor(props) {
+        this.props = props;
+    }
 
-const render = (
+    setState(partialState) {
+        this.state = {
+            ...this.state,
+            ...partialState
+        }
+        const curReactElement = this.render();
+        const domElement = this.parentDomElement;
+        console.log("preVDOM", this.preVDOM)
+        console.log("NextVDOM", curReactElement)
+        update(curReactElement, domElement, true)
+        // update UI
+    }
+
+}
+
+
+
+const update = (
     reactElement,
-    domElement
+    domElement,
+    isRoot
 ) => {
     let curDom;
     // console.log("TEST", reactElement)
@@ -16,22 +36,23 @@ const render = (
     } else {
         const { type, props } = reactElement;
         /// if type is ClassCompoennt
-        if (type.prototype instanceof MyReact.Component) {
+        if (type.prototype instanceof MyReact) {
             // console.log('class componnent props', props)
-            /// Mounting
-            /// constructor
+            /// Updating (TODS, Current is wrong)
+            //  React is comparing the preVDOM to nextVDOM using diffing Algrithem 
+            //  using Filter Scheduler to find the best way to update the RealDOM
             const curInstance = new type(props);
             // console.log("curInstance", curInstance)
-            curInstance.parentDomElement = domElement;
+
             // getDerivedStateFromProps
             curInstance.state = type.getDerivedStateFromProps(props, curInstance.state)
             // console.log("curInstance", curInstance)
 
             // render
             const curReactElement = curInstance.render();
-            curInstance.preVDOM = curReactElement;
+
             // console.log("curReactElement", curReactElement);
-            render(curReactElement, domElement);
+            update(curReactElement, domElement, isRoot);
             if (curInstance.componentDidmount) {
                 curInstance.componentDidmount()
             }
@@ -42,7 +63,7 @@ const render = (
         if (typeof type === 'function') {
             const curReactElement = type(props);
             // console.log("function compoennts TEST", curReactElement)
-            render(curReactElement, domElement);
+            update(curReactElement, domElement);
             return
         }
         /// else 
@@ -53,10 +74,10 @@ const render = (
                     if (Array.isArray(value)) {
                         // console.log(value);
                         value.forEach((rElement) => {
-                            render(rElement, curDom);
+                            update(rElement, curDom);
                         });
                     } else {
-                        render(value, curDom);
+                        update(value, curDom);
                     }
                 } else if (key.startsWith('on')) {
                     curDom.addEventListener(
@@ -69,8 +90,11 @@ const render = (
             }
         );
     }
-
-    domElement.appendChild(curDom);
+    if (isRoot) {
+        domElement.replaceChild(curDom, domElement.childNodes[0]);
+    } else {
+        domElement.appendChild(curDom);
+    }
 };
 
 
@@ -80,9 +104,10 @@ function getEventActionFromProps(propsKey) {
     return propsKey.slice(2).toLowerCase();
 }
 
-const MyReactDOM = {
-    render: render
+
+
+
+const MyReactExport = {
+    Component: MyReact
 }
-
-
-export default MyReactDOM
+export default MyReactExport;
