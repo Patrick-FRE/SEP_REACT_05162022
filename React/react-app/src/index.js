@@ -86,7 +86,7 @@ class Counter extends React.Component {
 
 
 ReactDOM.render(
-  <Counter title="MyCounter" />,
+  <App />,
   document.getElementById('root')
 );
 
