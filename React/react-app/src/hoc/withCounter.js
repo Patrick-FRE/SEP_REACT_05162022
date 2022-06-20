@@ -21,8 +21,16 @@ export const withCounter = (WrappedComponent, option = {
             }))
         }
 
+        handleSetOption = (opt) => {
+            this.setState({
+                counter: opt.initCounter
+            })
+            option.incrementNum = opt.incrementNum;
+            option.decrementNum = opt.decrementNum;
+        }
+
         render() {
-            return <WrappedComponent counter={this.state.counter} handleAdd={this.handleAdd} handleSub={this.handleSub}></WrappedComponent>
+            return <WrappedComponent {...this.props} counter={this.state.counter} handleAdd={this.handleAdd} handleSub={this.handleSub} handleSetOption={this.handleSetOption}></WrappedComponent>
         }
     }
 }

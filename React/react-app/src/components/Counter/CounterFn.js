@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 //let counterRef;
-const CounterFn = () => {
+const CounterFn = (props) => {
     console.log("render CounterFn")
+    console.log(props)
     const [title, setTitle] = React.useState("CounterFn");
     const [counter, setCounter] = React.useState(0);
     const [isAlert, setIsAlert] = React.useState(false)

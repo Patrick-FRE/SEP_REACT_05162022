@@ -30,7 +30,7 @@ function App() {
 
   const renderCurrentPage = () => {
     const CurPage = currentPage.pageComponent
-    return <CurPage />
+    return <CurPage patrick="patrick" />
   }
 
   return (

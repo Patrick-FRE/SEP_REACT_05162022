@@ -20,7 +20,7 @@ class Counter extends React.Component {
 
     render() {
         console.log('render class compoennt')
-        console.log(this.props)
+        console.log("props counter class", this.props)
         return <section>
             <header>{this.state.title}:{this.props.counter}</header>
             <button onClick={this.props.handleAdd} >+</button><button onClick={this.props.handleSub}>-</button>
