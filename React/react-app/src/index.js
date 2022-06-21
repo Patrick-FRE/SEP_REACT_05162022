@@ -4,6 +4,7 @@ import MyReactDOM from './myReact/MyReactDom';
 import './index.css';
 import App from './App';
 import MyReact from './myReact/MyReact'
+import { CounterContextProvider } from './context/counterContext';
 //import reportWebVitals from './reportWebVitals';
 
 // UI = React(state)
@@ -86,7 +87,10 @@ class Counter extends React.Component {
 
 
 ReactDOM.render(
-  <App />,
+  <CounterContextProvider>
+    <App />
+  </CounterContextProvider>
+  ,
   document.getElementById('root')
 );
 

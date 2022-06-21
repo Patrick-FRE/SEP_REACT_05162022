@@ -4,8 +4,10 @@ import CounterClass from './components/Counter/CounterClass'
 import CounterFn from './components/Counter/CounterFn';
 import CounterNumber from './components/Counter/CounterNumber';
 import BuyStockClass from './components/BuyStock/BuyStockClass'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import BuyStockFn from './components/BuyStock/BuyStockFn';
+import { CounterContext } from './context/counterContext';
+
 
 const pageInfo = [
   {
@@ -29,7 +31,9 @@ const pageInfo = [
 function App() {
 
   const [currentPage, setCurrentPage] = useState(pageInfo[1])
+  const value = useContext(CounterContext);
 
+  console.log("APP", value)
   const hanldeChangePage = (activePageInfo) => {
     setCurrentPage(activePageInfo)
   }
@@ -38,6 +42,8 @@ function App() {
     const CurPage = currentPage.pageComponent
     return <CurPage patrick="patrick" />
   }
+
+
 
   return (
     <div className="App" hello="hello">

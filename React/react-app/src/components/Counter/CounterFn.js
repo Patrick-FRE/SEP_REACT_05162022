@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { useCounterContext } from '../../context/counterContext';
 import { useCounter } from '../../hooks/useCounter'
 //let counterRef;
 const CounterFn = (props) => {
@@ -10,7 +11,7 @@ const CounterFn = (props) => {
         counter,
         handleAdd,
         handleSub
-    ] = useCounter()
+    ] = useCounterContext()
     const counterRef = React.useRef(counter)
 
     counterRef.current = counter;
