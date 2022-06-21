@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const withCounter = (WrappedComponent, option = {
-    initCounter: 0,
+    initCounter: 20,
     incrementNum: 1,
     decrementNum: 1
 }) => {

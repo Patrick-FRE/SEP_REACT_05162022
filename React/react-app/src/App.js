@@ -2,8 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 import CounterClass from './components/Counter/CounterClass'
 import CounterFn from './components/Counter/CounterFn';
+import CounterNumber from './components/Counter/CounterNumber';
 import BuyStockClass from './components/BuyStock/BuyStockClass'
 import { useState } from 'react';
+import BuyStockFn from './components/BuyStock/BuyStockFn';
 
 const pageInfo = [
   {
@@ -17,6 +19,10 @@ const pageInfo = [
   {
     pageName: "BuyStockClass",
     pageComponent: BuyStockClass
+  },
+  {
+    pageName: "BuyStockFn",
+    pageComponent: BuyStockFn
   }
 ]
 
@@ -38,7 +44,12 @@ function App() {
       <header className="App__header">
         <nav className="App__header__nav">
           {pageInfo.map(page => {
-            return <a onClick={() => hanldeChangePage(page)} >{page.pageName}</a>
+            switch (page.pageName) {
+              case "CounterClass":
+                return <a onClick={() => hanldeChangePage(page)} >{page.pageName} <CounterNumber />  </a>
+              default:
+                return <a onClick={() => hanldeChangePage(page)} >{page.pageName}</a>
+            }
           })}
         </nav>
       </header>

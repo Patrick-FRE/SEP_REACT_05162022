@@ -1,21 +1,22 @@
 import React, { useEffect } from 'react';
+import { useCounter } from '../../hooks/useCounter'
 //let counterRef;
 const CounterFn = (props) => {
     console.log("render CounterFn")
     console.log(props)
     const [title, setTitle] = React.useState("CounterFn");
-    const [counter, setCounter] = React.useState(0);
     const [isAlert, setIsAlert] = React.useState(false)
+    const [
+        counter,
+        handleAdd,
+        handleSub
+    ] = useCounter()
     const counterRef = React.useRef(counter)
+
     counterRef.current = counter;
 
     console.log(counterRef);
-    const handleAdd = () => {
-        setCounter(counter + 1)
-    }
-    const handleSub = () => {
-        setCounter(counter - 1)
-    }
+
 
     const hanldeAlert = () => {
         console.log("counter alert", counter)

@@ -10,8 +10,6 @@ class Counter extends React.Component {
         this.hanldeAlert = this.hanldeAlert.bind(this);
     }
 
-
-
     hanldeAlert() {
         setTimeout(() => {
             alert(this.props.counter)
