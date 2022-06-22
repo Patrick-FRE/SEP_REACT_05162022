@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import MyReact from './myReact/MyReact'
 import { CounterContextProvider } from './context/counterContext';
+import { BuyStockContextProvider } from './context/BuyStockContext';
 //import reportWebVitals from './reportWebVitals';
 
 // UI = React(state)
@@ -90,6 +91,7 @@ ReactDOM.render(
   <CounterContextProvider>
     <App />
   </CounterContextProvider>
+
   ,
   document.getElementById('root')
 );

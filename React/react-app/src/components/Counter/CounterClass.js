@@ -1,5 +1,6 @@
 import React from 'react';
 import { withCounter } from "../../hoc/withCounter"
+import { withCounterContext } from '../../context/counterContext'
 
 class Counter extends React.Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class Counter extends React.Component {
 }
 
 
-const CounterContainer = withCounter(Counter);
+const CounterContainer = withCounterContext(Counter);
 
 export default CounterContainer;
 

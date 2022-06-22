@@ -2,19 +2,21 @@ import React from 'react';
 import { withCounter } from '../../hoc/withCounter';
 import { withLoading } from '../../hoc/withLoading';
 import { getInitStockInfo } from '../../apis/stock.api'
+import { withBuyStockContext } from '../../context/BuyStockContext'
 class BuyStockClass extends React.Component {
     render() {
         return (
             <section>
+                <header>BuyStockClass</header>
                 <h1>How many stock you want to buy</h1>
                 {
-                    this.props.isLoading ? this.props.showLoading('spinner') :
+                    this.props.isLoadingStockAmount ? this.props.renderSpinner() :
                         <>
-                            <button onClick={this.props.handleAdd}>
+                            <button onClick={this.props.buyStock}>
                                 +
                             </button>
-                            <span>{this.props.counter}</span>
-                            <button onClick={this.props.handleSub}>
+                            <span>{this.props.stockAmount}</span>
+                            <button onClick={this.props.sellStock}>
                                 -
                             </button>
                         </>
@@ -23,18 +25,10 @@ class BuyStockClass extends React.Component {
         );
     }
 
-    componentDidMount() {
-        this.props.startLoading()
-        getInitStockInfo().then(option => {
-            this.props.handleSetOption(option);
-            this.props.endLoading()
-        })
-    }
+
 }
 
 //const BuyStockClassContainer = withNotification(withGlobal(withAuth(withCounter(withLoading(BuyStockClass)))));
-
-
-const BuyStockClassContainer = withCounter(withLoading(BuyStockClass));
-
+// const BuyStockClassContainer = withCounter(withLoading(BuyStockClass));
+const BuyStockClassContainer = withBuyStockContext(BuyStockClass)
 export default BuyStockClassContainer;

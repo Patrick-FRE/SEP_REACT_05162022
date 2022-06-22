@@ -2,30 +2,21 @@ import React, { useEffect } from 'react'
 import { getInitStockInfo } from '../../apis/stock.api'
 import { useCounter } from '../../hooks/useCounter'
 import { useLoading } from '../../hooks/useLoading'
+import { useBuyStockContext } from '../../context/BuyStockContext'
 
 const BuyStockFn = () => {
-    const [isLoading, startLoading, endLoading, showLoading] = useLoading(false)
-    const [
+    const {
         stockAmount,
         buyStock,
         sellStock,
-        setStockOption
-    ] = useCounter()
-
-    useEffect(() => {
-        startLoading()
-        getInitStockInfo().then(option => {
-            //console.log(option)
-            setStockOption(option);
-            endLoading()
-        })
-    }, [])
-
-
+        isLoadingStockAmount,
+        renderSpinner
+    } = useBuyStockContext()
     return <section>
+        <header>BuyStockFn</header>
         <h1>How many stock you want to buy</h1>
         {
-            isLoading ? showLoading('normal') :
+            isLoadingStockAmount ? renderSpinner() :
                 <>
                     <button onClick={buyStock}>
                         +

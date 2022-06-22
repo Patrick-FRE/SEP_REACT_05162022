@@ -7,6 +7,7 @@ import BuyStockClass from './components/BuyStock/BuyStockClass'
 import { useContext, useState } from 'react';
 import BuyStockFn from './components/BuyStock/BuyStockFn';
 import { CounterContext } from './context/counterContext';
+import { BuyStockContextProvider } from './context/BuyStockContext';
 
 
 const pageInfo = [
@@ -59,9 +60,11 @@ function App() {
           })}
         </nav>
       </header>
-      {
-        renderCurrentPage()
-      }
+      <BuyStockContextProvider>
+        {
+          renderCurrentPage()
+        }
+      </BuyStockContextProvider>
     </div>
   );
 }
