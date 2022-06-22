@@ -8,6 +8,8 @@ import { useContext, useState } from 'react';
 import BuyStockFn from './components/BuyStock/BuyStockFn';
 import { CounterContext } from './context/counterContext';
 import { BuyStockContextProvider } from './context/BuyStockContext';
+import MyReduxCounterFn, { MyReduxCounterNumberFn } from './MyRedux/MyReduxApp';
+import { MyReduxCounterClassContainer } from './MyRedux/ReactReduxApp'
 
 
 const pageInfo = [
@@ -26,7 +28,17 @@ const pageInfo = [
   {
     pageName: "BuyStockFn",
     pageComponent: BuyStockFn
+  },
+  {
+    pageName: "MyReduxCounterFn",
+    pageComponent: MyReduxCounterFn
+  },
+  {
+    pageName: "MyReduxCounterClassContainer",
+    pageComponent: MyReduxCounterClassContainer
   }
+
+
 ]
 
 function App() {
@@ -54,6 +66,9 @@ function App() {
             switch (page.pageName) {
               case "CounterClass":
                 return <a onClick={() => hanldeChangePage(page)} >{page.pageName} <CounterNumber />  </a>
+              case "MyReduxCounterFn":
+                return <a onClick={() => hanldeChangePage(page)} >{page.pageName} <MyReduxCounterNumberFn />  </a>
+
               default:
                 return <a onClick={() => hanldeChangePage(page)} >{page.pageName}</a>
             }
