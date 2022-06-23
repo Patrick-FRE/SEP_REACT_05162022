@@ -1,6 +1,7 @@
 import { store } from './MyRedux';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';
+import { useMySelector, useMyDispatch } from '../MyRedux/MyReactRedux'
 
 
 class MyReduxCounterClass extends React.Component {
@@ -36,14 +37,14 @@ const mapDispatchToProps = (dispatch) => {
 export const MyReduxCounterClassContainer = connect(mapStateToProps, mapDispatchToProps)(MyReduxCounterClass)
 
 
-export const MyReduxCounterNumberFn = () => {
-    const count = useSelector((state) => state.value)
-    return <span>{count}</span>
+export const MyReactReduxCounterNumberFn = () => {
+    const count = useMySelector((state) => state.value)
+    return <span style={{ color: "blue" }}>{count}</span>
 }
 
-const MyReduxCounterFn = () => {
-    const count = useSelector((state) => state.value)
-    const dispatch = useDispatch()
+const MyReactReduxCounterFn = () => {
+    const count = useMySelector((state) => state.value)
+    const dispatch = useMyDispatch()
     return <section>
         <header>
             MyReduxCounterFn
@@ -59,4 +60,4 @@ const MyReduxCounterFn = () => {
     </section>
 }
 
-export default MyReduxCounterFn
+export default MyReactReduxCounterFn

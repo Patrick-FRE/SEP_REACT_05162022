@@ -7,8 +7,9 @@ import MyReact from './myReact/MyReact'
 import { CounterContextProvider } from './context/counterContext';
 import { BuyStockContextProvider } from './context/BuyStockContext';
 
-import { Provider } from 'react-redux'
-import { store } from './MyRedux/MyRedux'
+import { Provider } from 'react-redux';
+import { MyProvider } from './MyRedux/MyReactRedux'
+import { myStore } from './MyRedux/MyRedux'
 //import reportWebVitals from './reportWebVitals';
 
 // UI = React(state)
@@ -91,11 +92,11 @@ class Counter extends React.Component {
 
 
 ReactDOM.render(
-  <Provider store={store}>
+  <MyProvider store={myStore}>
     <CounterContextProvider>
       <App />
     </CounterContextProvider>
-  </Provider>
+  </MyProvider>
 
 
   ,

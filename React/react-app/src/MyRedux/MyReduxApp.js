@@ -1,11 +1,12 @@
-import { store } from './MyRedux';
+import { myStore } from './MyRedux';
 import React, { useEffect } from 'react';
 import { useForceUpdate } from '../hooks/useForceUpdate'
+let store = myStore
 
 export const MyReduxCounterNumberFn = () => {
     const forceUpdate = useForceUpdate()
     useEffect(() => {
-        store.subscribe(() => {
+        myStore.subscribe(() => {
             console.log("subscribe")
             forceUpdate()
         })
@@ -16,6 +17,9 @@ export const MyReduxCounterNumberFn = () => {
 
 
 const MyReduxCounterFn = () => {
+    const [textObj, setText]
+        = React.useState({ textValue: "this is my text" })
+
     const forceUpdate = useForceUpdate()
     useEffect(() => {
         store.subscribe(() => {
@@ -35,6 +39,16 @@ const MyReduxCounterFn = () => {
             store.dispatch({ type: 'counter/decremented' })
             console.log("after dispatch", store.getState())
         }} >-</button>
+
+        <hr></hr>
+        <div>
+            {textObj.textValue}
+            <button onClick={() => {
+                console.log("textObj", textObj)
+                textObj.textValue = "changedAgain"
+                setText(textObj)
+            }}>ChangeText</button>
+        </div>
     </section>
 }
 
