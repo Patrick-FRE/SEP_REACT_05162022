@@ -1,14 +1,14 @@
 import { store } from './MyRedux';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';
-import { useMySelector, useMyDispatch } from '../MyRedux/MyReactRedux'
+import { useMySelector, useMyDispatch, myconnect } from '../MyRedux/MyReactRedux'
 
 
 class MyReduxCounterClass extends React.Component {
     render() {
         return <section>
             <header>
-                MyReduxCounterClass
+                MyReactReduxCounterClassContainer
             </header>
             Counter:{this.props.counter}
             <button onClick={() => {
@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch) => {
         dispatch: dispatch
     }
 }
-export const MyReduxCounterClassContainer = connect(mapStateToProps, mapDispatchToProps)(MyReduxCounterClass)
+export const MyReactReduxCounterClassContainer = myconnect(mapStateToProps, mapDispatchToProps)(MyReduxCounterClass)
 
 
 export const MyReactReduxCounterNumberFn = () => {

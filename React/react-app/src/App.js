@@ -9,7 +9,7 @@ import BuyStockFn from './components/BuyStock/BuyStockFn';
 import { CounterContext } from './context/counterContext';
 import { BuyStockContextProvider } from './context/BuyStockContext';
 import MyReduxCounterFn, { MyReduxCounterNumberFn } from './MyRedux/MyReduxApp';
-import MyReactReduxCounterFn, { MyReduxCounterClassContainer, MyReactReduxCounterNumberFn } from './MyRedux/ReactReduxApp'
+import MyReactReduxCounterFn, { MyReactReduxCounterClassContainer, MyReactReduxCounterNumberFn } from './MyRedux/ReactReduxApp'
 
 
 const pageInfo = [
@@ -34,8 +34,8 @@ const pageInfo = [
     pageComponent: MyReduxCounterFn
   },
   {
-    pageName: "MyReduxCounterClassContainer",
-    pageComponent: MyReduxCounterClassContainer
+    pageName: "MyReactReduxCounterClassContainer",
+    pageComponent: MyReactReduxCounterClassContainer
   },
   {
     pageName: "MyReactReduxCounterFn",

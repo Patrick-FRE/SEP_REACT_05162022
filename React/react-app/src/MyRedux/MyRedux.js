@@ -56,6 +56,16 @@ function mycreateStore(reducerFn) {
 
     function subscribe(subscriberFn) {
         subscriberFnList.push(subscriberFn)
+        return () => {
+            subscriberFnList = subscriberFnList.filter((subscriber) => {
+                if (subscriber === subscriberFn) {
+                    return false
+                } else {
+                    return true
+                }
+            })
+        }
+
     }
     return {
         getState,
