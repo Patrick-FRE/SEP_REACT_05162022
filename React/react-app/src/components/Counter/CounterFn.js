@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { useCounterContext } from '../../context/counterContext';
-import { useCounter } from '../../hooks/useCounter'
+import { useCounter } from '../../hooks/useCounter';
+import { useHistory } from '../../MyReactRouter/MyReactRouterDOM'
 //let counterRef;
 const CounterFn = (props) => {
     console.log("render CounterFn")
@@ -38,11 +39,15 @@ const CounterFn = (props) => {
             setIsAlert(false)
         }
     }, [isAlert])
+    const { push } = useHistory()
 
     return <section>
         <header>{title}:{counter}</header>
         <button onClick={handleAdd} >+</button><button onClick={handleSub}>-</button>
         <button onClick={hanldeAlertWayTwo}>Alert after 5 s</button>
+        <button onClick={() => {
+            push('/CounterClass')
+        }}>Redirect</button>
     </section>;
 }
 

@@ -1,4 +1,15 @@
 
+import React from 'react';
+import { useEffect } from 'react';
+import { useContext } from 'react';
+
+export const useForceUpdate = () => {
+    const [_, forceUpdate] = React.useState(false);
+    return () => { forceUpdate(pre => !pre) }
+}
+
+const ReactRouterContext = React.createContext(null);
+
 
 
 const match = (path, exac) => {
@@ -18,6 +29,8 @@ export const MyRoute = ({ exact, path, children }) => {
     // console.log("history", window.history)
     // console.log("location", window.location)
     // if path eact math URL path return children
+    const { match } = useRouter()
+
     if (match(path, exact)) {
         return children;
     }
@@ -26,7 +39,50 @@ export const MyRoute = ({ exact, path, children }) => {
 }
 
 export const MyLink = ({ to, children }) => {
+    const { navigate } = useRouter()
     // if you click MyLink, url path should change to TO props
+    const hanldeClick = (e) => {
+        e.preventDefault()
+        navigate(to)
+    }
+    return <a href={to} onClick={hanldeClick}> {children}</a>
+}
 
-    return <a> MyLink</a>
+export const useRouter = () => {
+    return useContext(ReactRouterContext)
+}
+
+export const useHistory = () => {
+    const { navigate } = useRouter()
+
+    return {
+        push: navigate
+    }
+}
+
+export const MyBrowserRouter = ({ children }) => {
+    const updateRoute = useForceUpdate()
+
+    const navigate = (to) => {
+        window.history.pushState({}, "", to)
+        updateRoute()
+    }
+
+    useEffect(() => {
+        const update = () => {
+            updateRoute()
+        }
+        // add listener to the url changes and trigger updateRoute
+        window.addEventListener('popstate', update);
+        return () => {
+            window.removeEventListener(
+                "popstate",
+                update
+            )
+        }
+    }, [])
+
+    return <ReactRouterContext.Provider value={{ navigate, match }}>
+        {children}
+    </ReactRouterContext.Provider>
 }

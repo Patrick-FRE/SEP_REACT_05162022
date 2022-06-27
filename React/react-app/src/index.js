@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import { MyProvider } from './MyRedux/MyReactRedux'
 import { myStore } from './MyRedux/MyRedux'
 import { BrowserRouter } from 'react-router-dom'
+import { MyBrowserRouter } from './MyReactRouter/MyReactRouterDOM'
 //import reportWebVitals from './reportWebVitals';
 
 // UI = React(state)
@@ -93,13 +94,16 @@ class Counter extends React.Component {
 
 
 ReactDOM.render(
-  <BrowserRouter>
-    <MyProvider store={myStore}>
-      <CounterContextProvider>
-        <App />
-      </CounterContextProvider>
-    </MyProvider>
-  </BrowserRouter>
+  <MyBrowserRouter>
+    <BrowserRouter>
+      <MyProvider store={myStore}>
+        <CounterContextProvider>
+          <App />
+        </CounterContextProvider>
+      </MyProvider>
+    </BrowserRouter>
+  </MyBrowserRouter>
+
 
   ,
   document.getElementById('root')
