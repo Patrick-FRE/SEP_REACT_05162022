@@ -10,6 +10,7 @@ import { BuyStockContextProvider } from './context/BuyStockContext';
 import { Provider } from 'react-redux';
 import { MyProvider } from './MyRedux/MyReactRedux'
 import { myStore } from './MyRedux/MyRedux'
+import { BrowserRouter } from 'react-router-dom'
 //import reportWebVitals from './reportWebVitals';
 
 // UI = React(state)
@@ -92,12 +93,13 @@ class Counter extends React.Component {
 
 
 ReactDOM.render(
-  <MyProvider store={myStore}>
-    <CounterContextProvider>
-      <App />
-    </CounterContextProvider>
-  </MyProvider>
-
+  <BrowserRouter>
+    <MyProvider store={myStore}>
+      <CounterContextProvider>
+        <App />
+      </CounterContextProvider>
+    </MyProvider>
+  </BrowserRouter>
 
   ,
   document.getElementById('root')

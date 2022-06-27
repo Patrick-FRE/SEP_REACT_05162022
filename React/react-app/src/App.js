@@ -4,12 +4,14 @@ import CounterClass from './components/Counter/CounterClass'
 import CounterFn from './components/Counter/CounterFn';
 import CounterNumber from './components/Counter/CounterNumber';
 import BuyStockClass from './components/BuyStock/BuyStockClass'
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
 import BuyStockFn from './components/BuyStock/BuyStockFn';
 import { CounterContext } from './context/counterContext';
 import { BuyStockContextProvider } from './context/BuyStockContext';
 import MyReduxCounterFn, { MyReduxCounterNumberFn } from './MyRedux/MyReduxApp';
-import MyReactReduxCounterFn, { MyReactReduxCounterClassContainer, MyReactReduxCounterNumberFn } from './MyRedux/ReactReduxApp'
+import MyReactReduxCounterFn, { MyReactReduxCounterClassContainer, MyReactReduxCounterNumberFn } from './MyRedux/ReactReduxApp';
+import { MyRoute, MyLink } from './MyReactRouter/MyReactRouterDOM'
 
 
 const pageInfo = [
@@ -44,16 +46,7 @@ const pageInfo = [
 ]
 
 function App() {
-
-  const [currentPage, setCurrentPage] = useState(pageInfo[1])
-  const value = useContext(CounterContext);
-
-  console.log("APP", value)
-  const hanldeChangePage = (activePageInfo) => {
-    setCurrentPage(activePageInfo)
-  }
-
-  const renderCurrentPage = () => {
+  const renderCurrentPage = (currentPage) => {
     const CurPage = currentPage.pageComponent
     return <CurPage patrick="patrick" />
   }
@@ -67,20 +60,29 @@ function App() {
           {pageInfo.map(page => {
             switch (page.pageName) {
               case "CounterClass":
-                return <a onClick={() => hanldeChangePage(page)} >{page.pageName} <CounterNumber />  </a>
+                return <MyLink key={page.pageName} to={`/${page.pageName}`} >{page.pageName} <CounterNumber />  </MyLink>
               case "MyReduxCounterFn":
-                return <a onClick={() => hanldeChangePage(page)} >{page.pageName} <MyReactReduxCounterNumberFn />  </a>
-
+                return <MyLink key={page.pageName} to={`/${page.pageName}`}>{page.pageName} <MyReactReduxCounterNumberFn />  </MyLink>
               default:
-                return <a onClick={() => hanldeChangePage(page)} >{page.pageName}</a>
+                return <MyLink key={page.pageName} to={`/${page.pageName}`} >{page.pageName}</MyLink>
             }
           })}
+
         </nav>
       </header>
+
       <BuyStockContextProvider>
         {
-          renderCurrentPage()
+          pageInfo.map(page => {
+            return <MyRoute key={page.pageName} exact path={`/${page.pageName}`}>
+              {renderCurrentPage(page)}
+            </MyRoute>
+          })
+
         }
+        <MyRoute exact path="/">
+          <h1>Home</h1>
+        </MyRoute>
       </BuyStockContextProvider>
     </div>
   );
